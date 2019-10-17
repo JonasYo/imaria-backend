@@ -6,9 +6,9 @@ import AuthController from './app/controllers/AuthController';
 import ServicesController from './app/controllers/ServicesController';
 
 // validadores de dados
-import validateAuthFields from './app/middlewares/auth/validateAuthFields';
-import validateUserCreateFields from './app/middlewares/user/validateStoreFields';
 import authMiddleware from './app/middlewares/global/auth';
+import validateAuthFields from './app/middlewares/auth/validateAuthFields';
+import validateUserCreateFields from './app/middlewares/user/validateCreateFields';
 import validateUserUpdateFields from './app/middlewares/user/validateUpdateFields';
 
 const routes = new Router();
@@ -29,7 +29,7 @@ routes.put(
 
 routes.get('/services', ServicesController.list);
 
-// routes.post('/services', AuthController.create);
+routes.post('/services', ServicesController.create);
 
 // routes.put('/services', AuthController.update);
 

@@ -11,7 +11,7 @@ export default async (req, res, next) => {
       .max(11)
       .required(),
     password: Yup.string()
-      .min(8)
+      .min(6)
       .required(),
   });
 

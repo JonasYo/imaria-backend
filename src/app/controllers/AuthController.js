@@ -4,7 +4,7 @@ import authConfig from '../../config/auth';
 
 import User from '../models/User';
 
-class SessionController {
+class AuthController {
   async singin(req, res) {
     const { email, password } = req.body;
 
@@ -77,4 +77,4 @@ class SessionController {
   }
 }
 
-export default new SessionController();
+export default new AuthController();

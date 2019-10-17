@@ -1,13 +1,13 @@
-import Sequelize, { Model } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 
 class Services extends Model {
   static init(sequelize) {
     super.init(
       {
-        name: Sequelize.STRING,
-        description: Sequelize.STRING,
-        price: Sequelize.FLOAT,
-        duration: Sequelize.INTEGER,
+        name: DataTypes.STRING,
+        description: DataTypes.STRING,
+        price: DataTypes.INTEGER,
+        duration: DataTypes.INTEGER,
       },
       {
         sequelize,

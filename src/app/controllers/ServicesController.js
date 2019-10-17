@@ -2,12 +2,13 @@ import Services from '../models/Services';
 
 class ServicesController {
   async create(req, res) {
-    const { id, name, email } = await Services.create(req.body);
+    console.log(req.body);
+    const { id, name, description } = await Services.create(req.body);
 
     return res.json({
       id,
       name,
-      email,
+      description,
     });
   }
 
@@ -20,22 +21,16 @@ class ServicesController {
   }
 
   async list(req, res) {
-    Services.findAll().then(books => {
-      console.log(books);
-    });
+    let response;
     try {
-      const response = await Services.findAll();
-      console.log(response);
+      response = await Services.findAll();
     } catch (error) {
-      console.log(error);
       return res.status(400).json({
         message: 'Não há serviços disponiveis no momento.',
         code: 'ERROR_BAD_REQUEST',
       });
     }
-    return res.json({
-      a: 'as',
-    });
+    return res.json(response);
   }
 
   async update(req, res) {
