@@ -23,6 +23,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      active: {
+        type: Sequelize.TINYINT,
+        defaultValue: '1',
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,
@@ -34,6 +38,6 @@ module.exports = {
     });
   },
   down: queryInterface => {
-    return queryInterface.dropTable(' ');
+    return queryInterface.dropTable('services');
   },
 };

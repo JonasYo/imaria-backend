@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import authConfig from '../../config/auth';
 
 import User from '../models/User';
+import Mail from '../../lib/Mail';
 
 class AuthController {
   async singin(req, res) {
@@ -19,20 +20,15 @@ class AuthController {
       });
     }
 
-    try {
-      const passwordMatch = await user.checkPassword(password);
-      if (!passwordMatch) {
-        return res.status(401).json({
-          message: 'Senha incorreta, tente novamente.',
-          code: 'ERROR_UNATHORIZED',
-        });
-      }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
+    const passwordMatch = await user.checkPassword(password);
+    if (!passwordMatch) {
+      return res.status(401).json({
+        message: 'Senha incorreta, tente novamente.',
+        code: 'ERROR_UNATHORIZED',
+      });
     }
 
-    const { id, name, avatar } = user;
+    const { id, name, phone } = user;
     const { expiresIn, secret } = authConfig;
 
     return res.json({
@@ -40,7 +36,7 @@ class AuthController {
         id,
         name,
         email,
-        avatar,
+        phone,
       },
       token: jwt.sign({ id }, secret, {
         expiresIn,
@@ -49,6 +45,8 @@ class AuthController {
   }
 
   async forgot(req, res) {
+    Mail.sendMail();
+
     const { email } = req.body;
 
     const user = await User.findOne({

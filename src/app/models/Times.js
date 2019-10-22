@@ -1,13 +1,10 @@
 import { Model, DataTypes } from 'sequelize';
 
-class Services extends Model {
+class Times extends Model {
   static init(sequelize) {
     super.init(
       {
-        name: DataTypes.STRING,
-        description: DataTypes.STRING,
-        price: DataTypes.INTEGER,
-        duration: DataTypes.INTEGER,
+        hour: DataTypes.STRING,
         active: DataTypes.TINYINT,
       },
       {
@@ -20,10 +17,10 @@ class Services extends Model {
 
   static associate(models) {
     this.hasMany(models.Schedules, {
-      foreignKey: 'service_id',
-      as: 'services',
+      foreignKey: 'hour_id',
+      as: 'hours',
     });
   }
 }
 
-export default Services;
+export default Times;

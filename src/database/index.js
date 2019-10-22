@@ -2,10 +2,12 @@ import Sequelize from 'sequelize';
 
 import User from '../app/models/User';
 import Services from '../app/models/Services';
+import Schedules from '../app/models/Schedules';
+import Times from '../app/models/Times';
 
 import databaseConfig from '../config/database';
 
-const models = [User, Services];
+const models = [User, Services, Schedules, Times];
 
 class Database {
   constructor() {
@@ -23,7 +25,7 @@ class Database {
         );
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.log(`1${error}`);
+      console.log(error);
     }
   }
 }

@@ -19,11 +19,16 @@ module.exports = {
       phone: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true,
+        // TODO: Verificar necessidade do telefone ser unico
+        // unique: true,
       },
       password_hash: {
         type: Sequelize.STRING,
         allowNull: false,
+      },
+      active: {
+        type: Sequelize.TINYINT,
+        defaultValue: '1',
       },
       created_at: {
         type: Sequelize.DATE,

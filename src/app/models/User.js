@@ -10,6 +10,7 @@ class User extends Model {
         phone: DataTypes.INTEGER,
         password: DataTypes.VIRTUAL,
         password_hash: DataTypes.STRING,
+        active: DataTypes.TINYINT,
       },
       {
         sequelize,
@@ -32,8 +33,8 @@ class User extends Model {
     return res;
   }
 
-  static associate() {
-    // this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
+  static associate(models) {
+    this.hasMany(models.Schedules, { foreignKey: 'user_id', as: 'schedules' });
   }
 }
 

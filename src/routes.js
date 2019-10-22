@@ -3,6 +3,7 @@ import { Router } from 'express';
 // controllers do projeto
 import UserController from './app/controllers/UserController';
 import AuthController from './app/controllers/AuthController';
+import ScheduleController from './app/controllers/ScheduleController';
 import ServicesController from './app/controllers/ServicesController';
 
 // validadores de dados
@@ -27,13 +28,24 @@ routes.put(
   UserController.update
 );
 
-routes.get('/services', ServicesController.list);
+routes.get('/services', ServicesController.listServicesAvailable);
 
-routes.post('/services', ServicesController.create);
+routes.get(
+  '/services/:date/schedule/:service_id',
+  ServicesController.listHoursAvailable
+);
+
+// routes.post('/services', ServicesController.create);
 
 // routes.put('/services', AuthController.update);
 
 // routes.delete('/services', AuthController.delete);
+
+routes.get('/schedule/:user_id', ScheduleController.listSchedule);
+
+routes.post('/services/:user_id/schedule', ScheduleController.create);
+
+// routes.put('/schedules', AuthController.singin);
 
 // routes.get('/feed', AuthController.singin);
 
@@ -42,12 +54,6 @@ routes.post('/services', ServicesController.create);
 // routes.put('/feed', AuthController.singin);
 
 // routes.delete('/feed', AuthController.singin);
-
-// routes.get('/schedule', AuthController.singin);
-
-// routes.post('/schedule', AuthController.singin);
-
-// routes.put('/schedule', AuthController.singin);
 
 // routes.delete('/device', AuthController.singin);
 

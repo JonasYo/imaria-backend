@@ -1,7 +1,4 @@
 import nodemailer from 'nodemailer';
-import { resolve } from 'path';
-import exphbs from 'express-handlebars';
-import nodemailerhbs from 'nodemailer-express-handlebars';
 
 import mailConfig from '../config/mail';
 
@@ -15,32 +12,26 @@ class Mail {
       secure,
       auth: auth.user ? auth : null,
     });
-
-    this.configureTemplates();
   }
 
-  configureTemplates() {
-    const viewPath = resolve(__dirname, '..', 'app', 'views', 'emails');
+  sendMail() {
+    // return this.transporter.sendMail({
+    //   ...message,
+    // });
+    const mailOptions = {
+      from: '"Example Team" <from@example.com>',
+      to: 'user1@example.com, user2@example.com',
+      subject: 'Nice Nodemailer test',
+      text: 'Hey there, it’s our first message sent with Nodemailer ;) ',
+      html:
+        '<b>Hey there! </b><br> This is our first message sent with Nodemailer',
+    };
 
-    this.transporter.use(
-      'compile',
-      nodemailerhbs({
-        viewEngine: exphbs.create({
-          layoutsDir: resolve(viewPath, 'layouts'),
-          partialsDir: resolve(viewPath, 'partials'),
-          defaultLayout: 'default',
-          extname: '.hbs',
-        }),
-        viewPath,
-        extName: '.hbs',
-      })
-    );
-  }
-
-  sendMail(message) {
-    return this.transporter.sendMail({
-      ...mailConfig.default,
-      ...message,
+    return this.transport.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return console.log(error);
+      }
+      console.log('Message sent: %s', info.messageId);
     });
   }
 }
