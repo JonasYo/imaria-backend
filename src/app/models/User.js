@@ -7,9 +7,12 @@ class User extends Model {
       {
         name: DataTypes.STRING,
         email: DataTypes.STRING,
+        date_birth: DataTypes.STRING,
         phone: DataTypes.INTEGER,
         password: DataTypes.VIRTUAL,
+        role_id: DataTypes.VIRTUAL,
         password_hash: DataTypes.STRING,
+        alias: DataTypes.STRING,
         active: DataTypes.TINYINT,
       },
       {
@@ -35,6 +38,10 @@ class User extends Model {
 
   static associate(models) {
     this.hasMany(models.Schedules, { foreignKey: 'user_id', as: 'schedules' });
+    this.hasMany(models.UserRole, {
+      foreignKey: 'user_id',
+      as: 'userRoles',
+    });
   }
 }
 

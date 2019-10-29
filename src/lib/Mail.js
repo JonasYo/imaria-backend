@@ -1,38 +1,37 @@
 import nodemailer from 'nodemailer';
+import hbs from 'nodemailer-express-handlebars';
 
-import mailConfig from '../config/mail';
+// import mailConfig from '../config/mail';
 
 class Mail {
   constructor() {
-    const { host, port, secure, auth } = mailConfig;
-
+    // const { host, port, secure, auth } = mailConfig;
     this.transporter = nodemailer.createTransport({
-      host,
-      port,
-      secure,
-      auth: auth.user ? auth : null,
+      service: 'Gmail',
+      auth: {
+        user: 'imariasobrancelhas@gmail.com', // Seu endereço do gmail.
+        pass: 'imariadesign123',
+      },
     });
   }
 
-  sendMail() {
-    // return this.transporter.sendMail({
-    //   ...message,
-    // });
-    const mailOptions = {
-      from: '"Example Team" <from@example.com>',
-      to: 'user1@example.com, user2@example.com',
-      subject: 'Nice Nodemailer test',
-      text: 'Hey there, it’s our first message sent with Nodemailer ;) ',
-      html:
-        '<b>Hey there! </b><br> This is our first message sent with Nodemailer',
+  configureTemplates(template) {
+    const handlebarOptions = {
+      viewEngine: {
+        extName: '.hbs',
+        partialsDir: 'src/resources/views/emails/',
+        layoutsDir: 'src/resources/views/emails/',
+        defaultLayout: `${template}.hbs`,
+      },
+      viewPath: 'src/resources/views/emails/',
+      extName: '.hbs',
     };
+    this.transporter.use('compile', hbs(handlebarOptions));
+  }
 
-    return this.transport.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        return console.log(error);
-      }
-      console.log('Message sent: %s', info.messageId);
-    });
+  sendMail(mailOptions) {
+    this.configureTemplates(mailOptions.template);
+    return this.transporter.sendMail(mailOptions);
   }
 }
 

@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 import authConfig from '../../config/auth';
 
 import User from '../models/User';
-import Mail from '../../lib/Mail';
 
 class AuthController {
   async singin(req, res) {
@@ -11,6 +10,7 @@ class AuthController {
 
     const user = await User.findOne({
       where: { email },
+      include: { association: 'userRoles' },
     });
 
     if (!user) {
@@ -28,7 +28,8 @@ class AuthController {
       });
     }
 
-    const { id, name, phone } = user;
+    // eslint-disable-next-line camelcase
+    const { id, name, phone, date_birth, createdAt, userRoles } = user;
     const { expiresIn, secret } = authConfig;
 
     return res.json({
@@ -37,6 +38,9 @@ class AuthController {
         name,
         email,
         phone,
+        date_birth,
+        createdAt,
+        userRoles,
       },
       token: jwt.sign({ id }, secret, {
         expiresIn,
@@ -45,8 +49,6 @@ class AuthController {
   }
 
   async forgot(req, res) {
-    Mail.sendMail();
-
     const { email } = req.body;
 
     const user = await User.findOne({

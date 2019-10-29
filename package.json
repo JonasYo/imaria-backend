@@ -4,13 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon src/server.js",
-    "run-queue": "nodemon src/queue.js",
+    "dev": "nodemon src/server.js",
     "migrate": "yarn sequelize db:migrate",
     "seed": "yarn sequelize db:seed:all",
-    "pretest": "NODE_ENV=test sequelize db:migrate",
-    "test": "NODE_ENV=test jest --runInBand",
-    "posttest": "NODE_ENV=test sequelize db:migrate:undo:all"
+    "test": "NODE_ENV=test jest --runInBand"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -24,7 +21,7 @@
     "multer": "^1.4.1",
     "mysql2": "^1.7.0",
     "nodemailer": "^6.2.1",
-    "nodemailer-express-handlebars": "^3.0.0",
+    "nodemailer-express-handlebars": "^3.1.0",
     "pg": "^7.11.0",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.8.12",

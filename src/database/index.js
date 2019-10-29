@@ -4,10 +4,12 @@ import User from '../app/models/User';
 import Services from '../app/models/Services';
 import Schedules from '../app/models/Schedules';
 import Times from '../app/models/Times';
+import Role from '../app/models/Role';
+import UserRole from '../app/models/UserRole';
 
 import databaseConfig from '../config/database';
 
-const models = [User, Services, Schedules, Times];
+const models = [User, Services, Schedules, Times, Role, UserRole];
 
 class Database {
   constructor() {

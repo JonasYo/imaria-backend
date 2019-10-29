@@ -1,13 +1,13 @@
+/* eslint-disable camelcase */
 import Schedules from '../models/Schedules';
 import User from '../models/User';
+import Mail from '../../lib/Mail';
 
 class ScheduleController {
   async create(req, res) {
-    // eslint-disable-next-line camelcase
     const { user_id } = req.params;
-    // eslint-disable-next-line camelcase
-    const { hour_id, service_id, date } = req.body;
-    console.log(date);
+    const { hour_id, service_id, date_start, date_end } = req.body;
+
     const user = await User.findByPk(user_id);
 
     if (!user) {
@@ -21,7 +21,22 @@ class ScheduleController {
       hour_id,
       service_id,
       user_id,
-      date,
+      date_start,
+      date_end,
+    });
+
+    Mail.sendMail({
+      from: '"Imaria Design" <noreply@imariasobrancelhas.com>',
+      to: `kobig10775@7dmail.com`,
+      subject: 'Confirmação de agendamento',
+      template: 'scheduling',
+      defaultLayout: 'scheduling',
+      context: {
+        user: `${user.name}`,
+        location: 'Curitiba',
+        hour: `${date_start}`,
+        professional: 'Maria Ruth',
+      },
     });
 
     return res.json(response);
@@ -40,10 +55,24 @@ class ScheduleController {
       });
     }
 
-    const response = await Schedules.findAll({
+    const response = {};
+
+    response.scheduled = await Schedules.findAll({
       where: {
         user_id,
+        active: 1,
+        realized: 0,
       },
+      include: { association: 'services' },
+    });
+
+    response.finished = await Schedules.findAll({
+      where: {
+        user_id,
+        active: 1,
+        realized: 1,
+      },
+      include: { association: 'services' },
     });
 
     return res.json(response);
@@ -71,13 +100,12 @@ class ScheduleController {
 
     await Schedules.update(req.body);
 
-    const { id, name, avatar } = await Schedules.findByPk(req.ScheduleId);
+    const { id, name } = await Schedules.findByPk(req.ScheduleId);
 
     return res.json({
       id,
       name,
       email,
-      avatar,
     });
   }
 }

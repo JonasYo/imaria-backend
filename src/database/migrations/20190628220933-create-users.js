@@ -22,9 +22,17 @@ module.exports = {
         // TODO: Verificar necessidade do telefone ser unico
         // unique: true,
       },
+      date_birth: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       password_hash: {
         type: Sequelize.STRING,
         allowNull: false,
+      },
+      alias: {
+        type: Sequelize.STRING,
+        defaultValue: 'NORMAL',
       },
       active: {
         type: Sequelize.TINYINT,

@@ -7,10 +7,9 @@ import ScheduleController from './app/controllers/ScheduleController';
 import ServicesController from './app/controllers/ServicesController';
 
 // validadores de dados
-import authMiddleware from './app/middlewares/global/auth';
-import validateAuthFields from './app/middlewares/auth/validateAuthFields';
+import authMiddleware from './app/middlewares/auth/auth';
+import validateAuthFields from './app/middlewares/global/validateAuthFields';
 import validateUserCreateFields from './app/middlewares/user/validateCreateFields';
-import validateUserUpdateFields from './app/middlewares/user/validateUpdateFields';
 
 const routes = new Router();
 
@@ -21,17 +20,17 @@ routes.post('/auth/forgot', validateAuthFields, AuthController.forgot);
 
 routes.post('/users', validateUserCreateFields, UserController.create);
 
-routes.put(
-  '/users',
-  authMiddleware,
-  validateUserUpdateFields,
-  UserController.update
-);
+routes.put('/users/:flag', authMiddleware, UserController.update);
 
-routes.get('/services', ServicesController.listServicesAvailable);
+routes.get(
+  '/services',
+  authMiddleware,
+  ServicesController.listServicesAvailable
+);
 
 routes.get(
   '/services/:date/schedule/:service_id',
+  authMiddleware,
   ServicesController.listHoursAvailable
 );
 
@@ -41,9 +40,17 @@ routes.get(
 
 // routes.delete('/services', AuthController.delete);
 
-routes.get('/schedule/:user_id', ScheduleController.listSchedule);
+routes.get(
+  '/schedule/:user_id',
+  authMiddleware,
+  ScheduleController.listSchedule
+);
 
-routes.post('/services/:user_id/schedule', ScheduleController.create);
+routes.post(
+  '/services/:user_id/schedule',
+  authMiddleware,
+  ScheduleController.create
+);
 
 // routes.put('/schedules', AuthController.singin);
 

@@ -4,7 +4,9 @@ class Schedules extends Model {
   static init(sequelize) {
     super.init(
       {
-        date: DataTypes.DATE,
+        date_start: DataTypes.DATE,
+        date_end: DataTypes.DATE,
+        realized: DataTypes.TINYINT,
         active: DataTypes.TINYINT,
       },
       {
@@ -18,7 +20,7 @@ class Schedules extends Model {
     this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
     this.belongsTo(models.Services, {
       foreignKey: 'service_id',
-      as: 'service',
+      as: 'services',
     });
     this.belongsTo(models.Times, { foreignKey: 'hour_id', as: 'hour' });
   }

@@ -7,7 +7,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      date: {
+      date_start: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      date_end: {
         type: Sequelize.DATE,
         allowNull: false,
       },
@@ -31,6 +35,11 @@ module.exports = {
         references: { model: 'times', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
+      },
+      realized: {
+        type: Sequelize.TINYINT,
+        defaultValue: '0',
+        allowNull: false,
       },
       active: {
         type: Sequelize.TINYINT,

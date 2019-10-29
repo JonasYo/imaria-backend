@@ -45,7 +45,7 @@ class ServicesController {
       attributes: ['hour_id'],
       where: {
         service_id,
-        date: {
+        date_start: {
           [Op.between]: [startDate, endDate],
         },
       },

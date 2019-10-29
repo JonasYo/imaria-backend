@@ -55,6 +55,5 @@ module.exports = {
       ],
       {}
     ),
-
   down: queryInterface => queryInterface.bulkDelete('services', null, {}),
 };
