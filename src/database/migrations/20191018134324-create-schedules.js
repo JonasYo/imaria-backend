@@ -36,12 +36,12 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      realized: {
+      is_realized: {
         type: Sequelize.TINYINT,
         defaultValue: '0',
         allowNull: false,
       },
-      active: {
+      is_actived: {
         type: Sequelize.TINYINT,
         defaultValue: '1',
         allowNull: false,

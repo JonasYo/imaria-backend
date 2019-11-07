@@ -1,11 +1,7 @@
 export default {
-  host: 'smtp.mailtrap.io',
-  port: 2525,
+  service: 'Gmail',
   auth: {
-    user: 'cfc9e08c564415',
-    pass: '9bed5314dd923d',
-  },
-  default: {
-    from: 'Teste <noreply@teste.com>',
+    user: 'imariasobrancelhas@gmail.com', // Seu endereço do gmail.
+    pass: 'imariadesign123',
   },
 };

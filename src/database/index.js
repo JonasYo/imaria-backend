@@ -6,10 +6,21 @@ import Schedules from '../app/models/Schedules';
 import Times from '../app/models/Times';
 import Role from '../app/models/Role';
 import UserRole from '../app/models/UserRole';
+import Tokens from '../app/models/Tokens';
+import Device from '../app/models/Device';
 
 import databaseConfig from '../config/database';
 
-const models = [User, Services, Schedules, Times, Role, UserRole];
+const models = [
+  User,
+  Services,
+  Schedules,
+  Times,
+  Role,
+  UserRole,
+  Tokens,
+  Device,
+];
 
 class Database {
   constructor() {

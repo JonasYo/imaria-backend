@@ -13,7 +13,7 @@ class User extends Model {
         role_id: DataTypes.VIRTUAL,
         password_hash: DataTypes.STRING,
         alias: DataTypes.STRING,
-        active: DataTypes.TINYINT,
+        is_actived: DataTypes.TINYINT,
       },
       {
         sequelize,
@@ -41,6 +41,14 @@ class User extends Model {
     this.hasMany(models.UserRole, {
       foreignKey: 'user_id',
       as: 'userRoles',
+    });
+    this.hasMany(models.Tokens, {
+      foreignKey: 'user_id',
+      as: 'userTokens',
+    });
+    this.hasMany(models.Device, {
+      foreignKey: 'user_id',
+      as: 'userDevice',
     });
   }
 }

@@ -1,9 +1,11 @@
-import { Model } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 
 class UserRole extends Model {
   static init(sequelize) {
     super.init(
-      {},
+      {
+        is_actived: DataTypes.INTEGER,
+      },
       {
         sequelize,
       }

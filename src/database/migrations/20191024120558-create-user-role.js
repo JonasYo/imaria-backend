@@ -21,6 +21,11 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
+      is_actived: {
+        type: Sequelize.TINYINT,
+        allowNull: false,
+        defaultValue: '1',
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,

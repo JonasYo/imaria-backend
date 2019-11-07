@@ -23,7 +23,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      active: {
+      is_actived: {
         type: Sequelize.TINYINT,
         defaultValue: '1',
       },

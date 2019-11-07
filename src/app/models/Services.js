@@ -8,7 +8,7 @@ class Services extends Model {
         description: DataTypes.STRING,
         price: DataTypes.INTEGER,
         duration: DataTypes.INTEGER,
-        active: DataTypes.TINYINT,
+        is_actived: DataTypes.TINYINT,
       },
       {
         sequelize,

@@ -53,56 +53,6 @@ class UserController {
     });
   }
 
-  async createAlternative(req, res) {
-    req.body.password = '$12sdw123ad675';
-
-    const userExists = await User.findOne({
-      where: { email: req.body.email, alias: req.body.alias },
-      include: { association: 'userRoles' },
-    });
-
-    if (userExists) {
-      return userExists;
-    }
-
-    const user = await User.create(req.body);
-
-    const userRole = await UserRole.create({
-      user_id: user.id,
-      role_id: req.body.role_id,
-      is_actived: 1,
-    });
-
-    user.userRoles = [];
-    user.userRoles.push(userRole);
-
-    if (!user.userRoles) {
-      return res.status(400).emit({
-        message: 'Erro ao definir o perfil para este usuário.',
-        code: 'ERROR_BAD_REQUEST',
-      });
-    }
-
-    Mail.sendMail({
-      from: '"Imaria Design" <noreply@imariasobrancelhas.com>',
-      to: `${user.email}`,
-      subject: `I'maria - Seja Bem-vindo`,
-      template: 'subscription',
-      context: {
-        user: `${user.name}`,
-      },
-      attachments: [
-        {
-          filename: 'image.png',
-          path: `${process.cwd()}/src/resources/images/logo.png`,
-          cid: 'logo',
-        },
-      ],
-    });
-
-    return user;
-  }
-
   async update(req, res) {
     const { flag } = req.params;
     const user = await User.findByPk(req.userId);

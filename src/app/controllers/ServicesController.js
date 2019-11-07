@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { Sequelize } from 'sequelize';
 
 import Services from '../models/Services';
@@ -26,7 +27,6 @@ class ServicesController {
   }
 
   async listHoursAvailable(req, res) {
-    // eslint-disable-next-line camelcase
     const { date, service_id } = req.params;
     const startDate = new Date(date);
     const endDate = new Date(date);
@@ -52,10 +52,7 @@ class ServicesController {
     });
 
     const hourNotAvailable = [];
-    // eslint-disable-next-line array-callback-return
-    schedule.map(hour => {
-      hourNotAvailable.push(hour.hour_id);
-    });
+    schedule.map(hour => hourNotAvailable.push(hour.hour_id));
 
     const response = await Times.findAll({
       where: {

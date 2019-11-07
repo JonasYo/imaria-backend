@@ -6,8 +6,8 @@ class Schedules extends Model {
       {
         date_start: DataTypes.DATE,
         date_end: DataTypes.DATE,
-        realized: DataTypes.TINYINT,
-        active: DataTypes.TINYINT,
+        is_realized: DataTypes.TINYINT,
+        is_actived: DataTypes.TINYINT,
       },
       {
         sequelize,

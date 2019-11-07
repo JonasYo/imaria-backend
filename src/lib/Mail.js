@@ -1,17 +1,15 @@
 import nodemailer from 'nodemailer';
 import hbs from 'nodemailer-express-handlebars';
 
-// import mailConfig from '../config/mail';
+import mailConfig from '../config/mail';
 
 class Mail {
   constructor() {
-    // const { host, port, secure, auth } = mailConfig;
+    const { service, auth } = mailConfig;
+
     this.transporter = nodemailer.createTransport({
-      service: 'Gmail',
-      auth: {
-        user: 'imariasobrancelhas@gmail.com', // Seu endereço do gmail.
-        pass: 'imariadesign123',
-      },
+      service,
+      auth,
     });
   }
 

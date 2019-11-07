@@ -1,42 +1,30 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('users', {
+    return queryInterface.createTable('tokens', {
       id: {
-        type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
+        type: Sequelize.INTEGER,
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      phone: {
+      user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        // TODO: Verificar necessidade do telefone ser unico
-        // unique: true,
+        references: { model: 'users', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
-      date_birth: {
+      token: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      password_hash: {
+      type: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      alias: {
-        type: Sequelize.STRING,
-        defaultValue: 'NORMAL',
-      },
-      is_actived: {
+      is_revoked: {
         type: Sequelize.TINYINT,
-        defaultValue: '1',
+        defaultValue: '0',
       },
       created_at: {
         type: Sequelize.DATE,
@@ -48,8 +36,7 @@ module.exports = {
       },
     });
   },
-
   down: queryInterface => {
-    return queryInterface.dropTable('users');
+    return queryInterface.dropTable('tokens');
   },
 };

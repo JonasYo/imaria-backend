@@ -1,55 +1,47 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('users', {
+    return queryInterface.createTable('devices', {
       id: {
-        type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
+        type: Sequelize.INTEGER,
+      },
+      notification_id: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      email: {
+      platform: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
       },
-      phone: {
+      user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        // TODO: Verificar necessidade do telefone ser unico
-        // unique: true,
-      },
-      date_birth: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      password_hash: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      alias: {
-        type: Sequelize.STRING,
-        defaultValue: 'NORMAL',
+        references: { model: 'users', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       is_actived: {
         type: Sequelize.TINYINT,
         defaultValue: '1',
-      },
-      created_at: {
-        type: Sequelize.DATE,
         allowNull: false,
       },
-      updated_at: {
-        type: Sequelize.DATE,
+      createdAt: {
         allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
       },
     });
   },
-
   down: queryInterface => {
-    return queryInterface.dropTable('users');
+    return queryInterface.dropTable('devices');
   },
 };

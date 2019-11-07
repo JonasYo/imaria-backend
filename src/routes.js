@@ -5,6 +5,7 @@ import UserController from './app/controllers/UserController';
 import AuthController from './app/controllers/AuthController';
 import ScheduleController from './app/controllers/ScheduleController';
 import ServicesController from './app/controllers/ServicesController';
+import DeviceController from './app/controllers/DeviceController';
 
 // validadores de dados
 import authMiddleware from './app/middlewares/auth/auth';
@@ -16,7 +17,15 @@ const routes = new Router();
 // rotas do projeto
 routes.post('/auth/singin', validateAuthFields, AuthController.singin);
 
-routes.post('/auth/forgot', validateAuthFields, AuthController.forgot);
+routes.post('/auth/singin/alternative', AuthController.singinAlternative);
+
+routes.post('/auth/forgot', AuthController.forgot);
+
+routes.post('/auth/reset', AuthController.reset);
+
+routes.post('/device', DeviceController.create);
+
+routes.put('/device', DeviceController.update);
 
 routes.post('/users', validateUserCreateFields, UserController.create);
 
@@ -34,16 +43,16 @@ routes.get(
   ServicesController.listHoursAvailable
 );
 
-// routes.post('/services', ServicesController.create);
-
-// routes.put('/services', AuthController.update);
-
-// routes.delete('/services', AuthController.delete);
+routes.get(
+  '/schedule/user/:user_id',
+  authMiddleware,
+  ScheduleController.listUserSchedule
+);
 
 routes.get(
-  '/schedule/:user_id',
+  '/schedule/:date/accredited/',
   authMiddleware,
-  ScheduleController.listSchedule
+  ScheduleController.listAccreditedSchedule
 );
 
 routes.post(
@@ -63,9 +72,5 @@ routes.post(
 // routes.delete('/feed', AuthController.singin);
 
 // routes.delete('/device', AuthController.singin);
-
-// routes.post('/device', AuthController.singin);
-
-// routes.put('/device', AuthController.singin);
 
 export default routes;
