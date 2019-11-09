@@ -1,7 +1,7 @@
 export default {
-  service: 'Gmail',
+  service: process.env.MAIL_HOST,
   auth: {
-    user: 'imariasobrancelhas@gmail.com', // Seu endereço do gmail.
-    pass: 'imariadesign123',
+    user: process.env.MAIL_USER, // Seu endereço do gmail.
+    pass: process.env.MAIL_PASS,
   },
 };
